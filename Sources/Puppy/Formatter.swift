@@ -1,7 +1,8 @@
 import Foundation
+import Logging
 
 public protocol LogFormattable {
-    func formatMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) -> String
+    func formatMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64, metadata: Logger.Metadata?) -> String
 }
 
 extension LogFormattable {

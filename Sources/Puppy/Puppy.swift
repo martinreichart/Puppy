@@ -3,6 +3,7 @@ import CPuppy
 #endif
 
 import Foundation
+import Logging
 
 typealias Log = Puppy
 
@@ -40,52 +41,52 @@ public class Puppy {
 
     @inlinable
     public func trace(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
-        logMessage(.trace, message: message(), tag: tag, function: function, file: file, line: line)
+        logMessage(.trace, message: message(), tag: tag, function: function, file: file, line: line, metadata: nil)
     }
 
     @inlinable
     public func verbose(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
-        logMessage(.verbose, message: message(), tag: tag, function: function, file: file, line: line)
+        logMessage(.verbose, message: message(), tag: tag, function: function, file: file, line: line, metadata: nil)
     }
 
     @inlinable
     public func debug(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
-        logMessage(.debug, message: message(), tag: tag, function: function, file: file, line: line)
+        logMessage(.debug, message: message(), tag: tag, function: function, file: file, line: line, metadata: nil)
     }
 
     @inlinable
     public func info(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
-        logMessage(.info, message: message(), tag: tag, function: function, file: file, line: line)
+        logMessage(.info, message: message(), tag: tag, function: function, file: file, line: line, metadata: nil)
     }
 
     @inlinable
     public func notice(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
-        logMessage(.notice, message: message(), tag: tag, function: function, file: file, line: line)
+        logMessage(.notice, message: message(), tag: tag, function: function, file: file, line: line, metadata: nil)
     }
 
     @inlinable
     public func warning(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
-        logMessage(.warning, message: message(), tag: tag, function: function, file: file, line: line)
+        logMessage(.warning, message: message(), tag: tag, function: function, file: file, line: line, metadata: nil)
     }
 
     @inlinable
     public func error(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
-        logMessage(.error, message: message(), tag: tag, function: function, file: file, line: line)
+        logMessage(.error, message: message(), tag: tag, function: function, file: file, line: line, metadata: nil)
     }
 
     @inlinable
     public func critical(_ message: @autoclosure () -> String, tag: String = "", function: String = #function, file: String = #file, line: UInt = #line) {
-        logMessage(.critical, message: message(), tag: tag, function: function, file: file, line: line)
+        logMessage(.critical, message: message(), tag: tag, function: function, file: file, line: line, metadata: nil)
     }
 
     @inlinable
-    func logMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String] = ["source": ""]) {
+    func logMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String] = ["source": ""], metadata: Logger.Metadata?) {
         let date = Date()
         let threadID = currentThreadID()
 
         let targetedLoggers = loggers.filter { $0.isLogging(level) }
         for logger in targetedLoggers {
-            logger.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: logger.label, date: date, threadID: threadID)
+            logger.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: logger.label, date: date, threadID: threadID, metadata: metadata)
         }
     }
 

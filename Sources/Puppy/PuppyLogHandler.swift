@@ -28,9 +28,9 @@ public struct PuppyLogHandler: LogHandler {
 
     public func log(level: Logger.Level, message: Logger.Message, metadata: Logger.Metadata?, source: String, file: String, function: String, line: UInt) {
 
-        let metadata = !mergedMetadata(metadata).isEmpty ? "\(mergedMetadata(metadata))" : ""
-        let swiftLogInfo = ["label": label, "source": source, "metadata": metadata]
-        puppy.logMessage(level.toPuppy(), message: "\(message)", tag: "swiftlog", function: function, file: file, line: line, swiftLogInfo: swiftLogInfo)
+        let stringifiedMetadata = !mergedMetadata(metadata).isEmpty ? "\(mergedMetadata(metadata))" : ""
+        let swiftLogInfo = ["label": label, "source": source, "metadata": stringifiedMetadata]
+        puppy.logMessage(level.toPuppy(), message: "\(message)", tag: "swiftlog", function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, metadata: metadata)
     }
 
     private func mergedMetadata(_ metadata: Logger.Metadata?) -> Logger.Metadata {

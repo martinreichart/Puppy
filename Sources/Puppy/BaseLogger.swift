@@ -1,4 +1,5 @@
 import Foundation
+import Logging
 
 public protocol Loggerable {
 
@@ -20,12 +21,12 @@ open class BaseLogger: Loggerable {
     public var format: LogFormattable?
 
     @inlinable
-    func formatMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64) {
+    func formatMessage(_ level: LogLevel, message: String, tag: String, function: String, file: String, line: UInt, swiftLogInfo: [String: String], label: String, date: Date, threadID: UInt64, metadata: Logger.Metadata?) {
         if !enabled { return }
 
         var formattedMessage = ""
         if let format = format {
-            formattedMessage = format.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: label, date: date, threadID: threadID)
+            formattedMessage = format.formatMessage(level, message: message, tag: tag, function: function, file: file, line: line, swiftLogInfo: swiftLogInfo, label: label, date: date, threadID: threadID, metadata: metadata)
         } else {
             formattedMessage = message
         }
