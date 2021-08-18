@@ -97,9 +97,9 @@ public class FileRotationLogger: BaseLogger {
     private func rotateFiles() {
         if let size = try? fileHandle.seekToEndCompatible(), size > maxFileSize {
             closeFile()
-            do {
+            do {                
                 let archivedFileURL = fileURL.deletingPathExtension()
-                    .appendingPathExtension(dateFormatter(Date(), dateFormat: "yyyyMMdd'T'HHmmss.SSSZZZZZ", timeZone: "GMT") + "_" + UUID().uuidString.lowercased())
+                    .appendingPathExtension(dateFormatter(Date(), dateFormat: "yyyyMMdd'T'HHmmss.SSSZZZZZ", timeZone: "GMT") + "_" + UUID().uuidString.lowercased()).appendingPathExtension(fileURL.pathExtension)
                 try FileManager.default.moveItem(at: fileURL, to: archivedFileURL)
                 delegate?.fileRotationLogger(self, didArchiveFileURL: fileURL, toFileURL: archivedFileURL)
             } catch {
